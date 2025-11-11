@@ -1,10 +1,6 @@
 // GraphScreen.js
 import React, { useEffect, useState } from "react";
-<<<<<<< HEAD
 import GraphComponent from "./GraphComponent";
-=======
-import GraphComponent from "./graphComponent";
->>>>>>> origin/master
 import LogWindow from "./LogWindow";
 import { Link } from "react-router-dom";
 
@@ -51,14 +47,9 @@ function GraphScreen() {
     setVisibleCount((prev) => prev + customCount);
     setLogMessages((prev) => [
       ...prev,
-<<<<<<< HEAD
       `Loaded ${customCount} more transactions. Total visible: ${
         visibleCount + customCount
       }`,
-=======
-      `Loaded ${customCount} more transactions. Total visible: ${visibleCount +
-        customCount}`,
->>>>>>> origin/master
     ]);
   };
 
@@ -175,7 +166,6 @@ function GraphScreen() {
               <table style={{ width: "100%", borderCollapse: "collapse" }}>
                 <thead>
                   <tr>
-<<<<<<< HEAD
                     <th style={{ border: "1px solid #ccc", padding: "5px" }}>
                       From
                     </th>
@@ -191,19 +181,11 @@ function GraphScreen() {
                     <th style={{ border: "1px solid #ccc", padding: "5px" }}>
                       Time
                     </th>
-=======
-                    <th style={{ border: "1px solid #ccc", padding: "5px" }}>From</th>
-                    <th style={{ border: "1px solid #ccc", padding: "5px" }}>To</th>
-                    <th style={{ border: "1px solid #ccc", padding: "5px" }}>Amount</th>
-                    <th style={{ border: "1px solid #ccc", padding: "5px" }}>TxHash</th>
-                    <th style={{ border: "1px solid #ccc", padding: "5px" }}>Time</th>
->>>>>>> origin/master
                   </tr>
                 </thead>
                 <tbody>
                   {addressDetails.map((tx, index) => (
                     <tr key={index}>
-<<<<<<< HEAD
                       <td style={{ border: "1px solid #ccc", padding: "5px" }}>
                         {tx.From}
                       </td>
@@ -219,13 +201,6 @@ function GraphScreen() {
                       <td style={{ border: "1px solid #ccc", padding: "5px" }}>
                         {new Date(tx.Time * 1000).toLocaleString()}
                       </td>
-=======
-                      <td style={{ border: "1px solid #ccc", padding: "5px" }}>{tx.From}</td>
-                      <td style={{ border: "1px solid #ccc", padding: "5px" }}>{tx.To}</td>
-                      <td style={{ border: "1px solid #ccc", padding: "5px" }}>{tx.Amount}</td>
-                      <td style={{ border: "1px solid #ccc", padding: "5px" }}>{tx.TxHash}</td>
-                      <td style={{ border: "1px solid #ccc", padding: "5px" }}>{new Date(tx.Time * 1000).toLocaleString()}</td>
->>>>>>> origin/master
                     </tr>
                   ))}
                 </tbody>
@@ -234,15 +209,11 @@ function GraphScreen() {
           )}
 
           {/* Log Window */}
-<<<<<<< HEAD
           <LogWindow
             logMessages={logMessages}
             visible={logVisible}
             onToggle={toggleLog}
           />
-=======
-          <LogWindow logMessages={logMessages} visible={logVisible} onToggle={toggleLog} />
->>>>>>> origin/master
         </>
       )}
     </div>
