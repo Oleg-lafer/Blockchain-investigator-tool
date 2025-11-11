@@ -28,7 +28,6 @@ app.get("/api/transactions", (req, res) => {
     console.log("Request callback triggered");
     console.log("Error object:", error);
     console.log("Response status code:", response && response.statusCode);
-    console.log("Response body keys:", response && response.body && Object.keys(response.body));
 
     if (error) {
       console.error("Network error:", error);
@@ -65,20 +64,23 @@ app.get("/api/transactions", (req, res) => {
         amount: o.value / 100000000,
       }));
 
+      // Filter only transactions where wallet is directly involved
       inputs.forEach((input) => {
         outputs.forEach((output) => {
-          simplifiedTxs.push({
-            From: input.address,
-            To: output.address,
-            Amount: output.amount,
-            TxHash: txHash,
-            Time: time,
-          });
+          if (input.address === wallet || output.address === wallet) {
+            simplifiedTxs.push({
+              From: input.address,
+              To: output.address,
+              Amount: output.amount,
+              TxHash: txHash,
+              Time: time,
+            });
+          }
         });
       });
     });
 
-    console.log("Simplified transactions prepared:", simplifiedTxs.length);
+    console.log("Simplified transactions prepared (filtered):", simplifiedTxs.length);
     res.json({ transactions: simplifiedTxs });
   });
 });

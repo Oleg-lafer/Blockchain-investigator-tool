@@ -1,23 +1,26 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
+import Loader from "./Loader";
 
 function InputComponent() {
   const [inputValue, setInputValue] = useState("");
   const [transactions, setTransactions] = useState([]);
+  const [loading, setLoading] = useState(false);
   const history = useHistory();
 
   const handleSubmit = async () => {
+    setLoading(true);
     try {
       const url = `http://localhost:5000/api/transactions?wallet=${inputValue}`;
       const response = await fetch(url);
       const data = await response.json();
       setTransactions(data.transactions || []);
 
-      // שמירה של הנתונים ב-localStorage כדי להשתמש בהם במסך הגרף
       localStorage.setItem("transactions", JSON.stringify(data.transactions || []));
     } catch (error) {
       console.error("Error during fetch:", error);
     }
+    setLoading(false);
   };
 
   return (
@@ -39,8 +42,10 @@ function InputComponent() {
         Go to Graph View
       </button>
 
+      <Loader visible={loading} message="Fetching transactions..." />
+
       <h3>Transactions:</h3>
-      {transactions.length === 0 && <p>No transactions yet.</p>}
+      {transactions.length === 0 && !loading && <p>No transactions yet.</p>}
       <ul>
         {transactions.map((tx, index) => (
           <li key={index}>
