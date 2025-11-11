@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import Loader from "./Loader";
 import GraphScreen from "./GraphScreen";
+import TransactionsTable from "./TransactionsTable";
 
 function InputComponent() {
   const [inputValue, setInputValue] = useState("");
@@ -16,7 +17,6 @@ function InputComponent() {
       const response = await fetch(url);
       const data = await response.json();
       setTransactions(data.transactions || []);
-      localStorage.setItem("transactions", JSON.stringify(data.transactions || []));
     } catch (error) {
       console.error("Error during fetch:", error);
     }
@@ -41,6 +41,9 @@ function InputComponent() {
 
       {/* Graph מופיע מתחת ל־Input */}
       {transactions.length > 0 && <GraphScreen transactions={transactions} />}
+
+      {/* Transactions Table מופיעה רק אם יש נתונים */}
+      {transactions.length > 0 && <TransactionsTable transactions={transactions} />}
     </div>
   );
 }

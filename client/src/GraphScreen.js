@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from "react";
 import GraphComponent from "./GraphComponent";
 import LogWindow from "./LogWindow";
-import { Link } from "react-router-dom";
 
 function GraphScreen() {
   const [transactions, setTransactions] = useState([]);
@@ -10,9 +9,10 @@ function GraphScreen() {
   const [customCount, setCustomCount] = useState(10);
   const [selectedAddress, setSelectedAddress] = useState(null);
   const [addressDetails, setAddressDetails] = useState([]);
-  const [logVisible, setLogVisible] = useState(true); // מצב פתוח/סגור
+  const [logVisible, setLogVisible] = useState(true);
   const [logMessages, setLogMessages] = useState([]);
   const [loadingGraph, setLoadingGraph] = useState(false);
+  const [tableVisible, setTableVisible] = useState(false); // מצב הטבלה
 
   useEffect(() => {
     const stored = localStorage.getItem("transactions");
@@ -63,9 +63,11 @@ function GraphScreen() {
       ...prev,
       `Selected node: ${nodeId}. Related transactions: ${relatedTxs.length}`,
     ]);
+    setTableVisible(false); // סגור את הטבלה אוטומטית כשנבחר Node חדש
   };
 
   const toggleLog = () => setLogVisible((prev) => !prev);
+  const toggleTable = () => setTableVisible((prev) => !prev);
 
   return (
     <div
@@ -80,20 +82,6 @@ function GraphScreen() {
       }}
     >
       <h2 style={{ marginBottom: "15px" }}>Graph View</h2>
-      <Link
-        to="/"
-        style={{
-          marginBottom: "20px",
-          padding: "8px 16px",
-          backgroundColor: "#007bff",
-          color: "white",
-          border: "none",
-          borderRadius: "6px",
-          textDecoration: "none",
-        }}
-      >
-        ← Back to Table
-      </Link>
 
       {transactions.length === 0 ? (
         <p>No transactions to display. Please go back and load data first.</p>
@@ -151,7 +139,26 @@ function GraphScreen() {
             <GraphComponent data={graphData} onClickNode={handleNodeClick} />
           </div>
 
+          {/* כפתור לפתיחת/סגירת הטבלה */}
           {selectedAddress && (
+            <button
+              onClick={toggleTable}
+              style={{
+                padding: "6px 12px",
+                marginTop: "10px",
+                backgroundColor: "#007bff",
+                color: "white",
+                border: "none",
+                borderRadius: "5px",
+                cursor: "pointer",
+              }}
+            >
+              {tableVisible ? "Hide Transactions Table" : "Show Transactions Table"}
+            </button>
+          )}
+
+          {/* הטבלה עצמה */}
+          {selectedAddress && tableVisible && (
             <div
               style={{
                 width: "90%",
@@ -166,38 +173,20 @@ function GraphScreen() {
               <table style={{ width: "100%", borderCollapse: "collapse" }}>
                 <thead>
                   <tr>
-                    <th style={{ border: "1px solid #ccc", padding: "5px" }}>
-                      From
-                    </th>
-                    <th style={{ border: "1px solid #ccc", padding: "5px" }}>
-                      To
-                    </th>
-                    <th style={{ border: "1px solid #ccc", padding: "5px" }}>
-                      Amount
-                    </th>
-                    <th style={{ border: "1px solid #ccc", padding: "5px" }}>
-                      TxHash
-                    </th>
-                    <th style={{ border: "1px solid #ccc", padding: "5px" }}>
-                      Time
-                    </th>
+                    <th style={{ border: "1px solid #ccc", padding: "5px" }}>From</th>
+                    <th style={{ border: "1px solid #ccc", padding: "5px" }}>To</th>
+                    <th style={{ border: "1px solid #ccc", padding: "5px" }}>Amount</th>
+                    <th style={{ border: "1px solid #ccc", padding: "5px" }}>TxHash</th>
+                    <th style={{ border: "1px solid #ccc", padding: "5px" }}>Time</th>
                   </tr>
                 </thead>
                 <tbody>
                   {addressDetails.map((tx, index) => (
                     <tr key={index}>
-                      <td style={{ border: "1px solid #ccc", padding: "5px" }}>
-                        {tx.From}
-                      </td>
-                      <td style={{ border: "1px solid #ccc", padding: "5px" }}>
-                        {tx.To}
-                      </td>
-                      <td style={{ border: "1px solid #ccc", padding: "5px" }}>
-                        {tx.Amount}
-                      </td>
-                      <td style={{ border: "1px solid #ccc", padding: "5px" }}>
-                        {tx.TxHash}
-                      </td>
+                      <td style={{ border: "1px solid #ccc", padding: "5px" }}>{tx.From}</td>
+                      <td style={{ border: "1px solid #ccc", padding: "5px" }}>{tx.To}</td>
+                      <td style={{ border: "1px solid #ccc", padding: "5px" }}>{tx.Amount}</td>
+                      <td style={{ border: "1px solid #ccc", padding: "5px" }}>{tx.TxHash}</td>
                       <td style={{ border: "1px solid #ccc", padding: "5px" }}>
                         {new Date(tx.Time * 1000).toLocaleString()}
                       </td>
