@@ -4,6 +4,7 @@
 A web-based visualization tool for exploring blockchain transactions.
 It allows investigators and analysts to trace wallet connections, examine transaction flows, and identify relationships between blockchain addresses through an interactive graph.
 
+[Link to Demo video](https://www.youtube.com/watch?v=0YPUcXyQ6xM)
 <img src="Demo.jpg" alt="Demo" width="400"/>
 ---
 
