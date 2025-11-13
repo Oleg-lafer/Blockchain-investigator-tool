@@ -1,13 +1,22 @@
-body {
+/* טוען את הפונט Chakra Petch */
+@import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600&display=swap');
+
+/* אפס מרווחים בסיסי */
+* {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+/* גוף האתר */
+body {
+  font-family: 'Chakra Petch', sans-serif;
+  background-color: #121212; /* רקע כהה לכל האתר */
+  color: #eaeaea;
+  line-height: 1.5;
+}
+
+/* קלאס עזר לכל כפתור או אלמנט */
+button {
+  font-family: 'Chakra Petch', sans-serif;
 }
